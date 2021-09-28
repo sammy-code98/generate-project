@@ -1,0 +1,3 @@
+[submodule "app-generator-api"]
+	path = app-generator-api
+	url = https://github.com/auth0-blog/app-generator-api.git

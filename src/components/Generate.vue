@@ -1,7 +1,7 @@
 <template>
   <!-- <div>{{listSkill}}</div> -->
   <div class="generator">
-    <section class="hero is-primary is-bold has-text-centered py-6">
+    <section class="hero is-danger is-bold has-text-centered py-6">
       <div class="hero-body">
         <div class="container">
           <h1 class="title">
@@ -44,6 +44,10 @@
                 <ul v-for="skill in app.skills" :key="skill.id">
                   <li>
                     <strong>{{ listSkill[skill - 1].skill }}</strong>
+                    <p v-if="listSkill[skill-1].options" :set="randSkill = getRandom(listSkill[skill-1].options)">
+                          🦮 <a :href="randSkill">{{ randSkill }}</a>
+
+                    </p>
                   </li>
                 </ul>
               </div>
@@ -98,6 +102,11 @@ export default {
     function hasAllSkills(appSkills, selectedSkills) {
       return selectedSkills.every((f) => appSkills.includes(f));
     }
+    function getRandom(value){
+      let keys = Object.keys(value)
+      return value[keys[keys.length * Math.random() << 0]]
+
+    }
 
     getListSkill();
     getAppList();
@@ -107,6 +116,7 @@ export default {
       skillSelected,
       appListFiltered,
       getFilteredApp,
+      getRandom
     };
   },
 };
@@ -118,5 +128,8 @@ label {
 }
 .card{
   height: 100%;
+}
+a{
+  word-break: break-word;
 }
 </style>

@@ -14,6 +14,7 @@
                   type="checkbox"
                   v-model="skillSelected"
                   :value="skill.id"
+                  @change="getFilteredApp"
                 />
                 {{ skill.skill }}
               </label>
@@ -23,6 +24,34 @@
         </div>
       </div>
     </section>
+    <div class="container">
+      <div class="columns is-multiline mt-3">
+        <div
+          class="column is-one-third"
+          v-for="app in appListFiltered"
+          :key="app.id"
+        >
+          <div class="card">
+            <header class="card-header">
+              <p class="card-header-title is-uppercase is-size-5">
+                {{ app.app }}
+              </p>
+            </header>
+            <div class="card-content">
+              <div class="content has-text-left mb-4">
+                <p class="is-size-7">{{ app.instructions }}</p>
+                <h4>Skills:</h4>
+                <ul v-for="skill in app.skills" :key="skill.id">
+                  <li>
+                    <strong>{{ listSkill[skill - 1].skill }}</strong>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -48,19 +77,36 @@ export default {
       listSkill.value = await res.json();
     }
 
-
     // method to get app idea list
-    async function getAppList(){
-      const resp = await fetch(`${GENERATE_URL}/apps`)
-      appList=  await resp.json()
-      appListFiltered.value = appList
+    async function getAppList() {
+      const resp = await fetch(`${GENERATE_URL}/apps`);
+      appList = await resp.json();
+      appListFiltered.value = appList;
     }
+    // method to get filtered app list
+    function getFilteredApp() {
+      appListFiltered.value = [];
+      for (const app of appList) {
+        const appSkillsArray = app.skills;
+        const selectedSkillsArray = skillSelected.value;
+
+        if (hasAllSkills(appSkillsArray, selectedSkillsArray)) {
+          appListFiltered.value.push(app);
+        }
+      }
+    }
+    function hasAllSkills(appSkills, selectedSkills) {
+      return selectedSkills.every((f) => appSkills.includes(f));
+    }
+
     getListSkill();
-    getAppList()
+    getAppList();
+
     return {
       listSkill,
       skillSelected,
-      appListFiltered
+      appListFiltered,
+      getFilteredApp,
     };
   },
 };
@@ -69,5 +115,8 @@ export default {
 label {
   font-size: 20px;
   margin: 10px;
+}
+.card{
+  height: 100%;
 }
 </style>

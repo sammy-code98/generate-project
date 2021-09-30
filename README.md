@@ -1,5 +1,7 @@
 # generate-project
 
+Just a small project to understand the dynamics of vue 3 composition api
+
 ## Project setup
 ```
 npm install

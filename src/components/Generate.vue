@@ -31,7 +31,7 @@
           v-for="app in appListFiltered"
           :key="app.id"
         >
-          <div class="card px-4">
+          <div class="card">
             <header class="card-header">
               <p class="card-header-title  has-text-centered  has-text-danger is-uppercase is-size-5">
                 {{ app.app }}

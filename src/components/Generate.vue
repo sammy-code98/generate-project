@@ -31,9 +31,9 @@
           v-for="app in appListFiltered"
           :key="app.id"
         >
-          <div class="card">
+          <div class="card px-4">
             <header class="card-header">
-              <p class="card-header-title is-uppercase is-size-5">
+              <p class="card-header-title  has-text-centered  has-text-danger is-uppercase is-size-5">
                 {{ app.app }}
               </p>
             </header>
@@ -43,7 +43,7 @@
                 <h4>Skills:</h4>
                 <ul v-for="skill in app.skills" :key="skill.id">
                   <li>
-                    <strong>{{ listSkill[skill - 1].skill }}</strong>
+                    <strong class="is-size-8 px-3 mr-3">{{ listSkill[skill - 1].skill }}</strong>
                     <p v-if="listSkill[skill-1].options" :set="randSkill = getRandom(listSkill[skill-1].options)">
                           🦮 <a :href="randSkill">{{ randSkill }}</a>
 
@@ -128,6 +128,7 @@ label {
 }
 .card{
   height: 100%;
+  width: 100%;
 }
 a{
   word-break: break-word;
